@@ -1,13 +1,28 @@
 package token
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-type Handler struct{}
+	"Guardian_/internal/oidc/token"
 
-func (h *Handler) Handle(context *gin.Context) {
+	"github.com/gin-gonic/gin"
+)
 
+type Handler struct {
+	service *token.Service
 }
 
-func NewHandler(issuer any, client any, code any, token any, provider any, service any) interface{} {
+func NewHandler(service *token.Service) *Handler {
+	return &Handler{
+		service: service,
+	}
+}
 
+func (h *Handler) ExchangeToken(c *gin.Context) {
+	result, err := h.service.ExchangeToken()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, result)
 }

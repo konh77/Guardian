@@ -6,6 +6,8 @@ func NewService() *Service {
 	return &Service{}
 }
 
-func (s *Service) GetKeySet() interface{} {
-	return nil
+func (s *Service) Authorize() (*Result, error) {
+	return &Result{
+		RedirectURL: "",
+	}, nil
 }

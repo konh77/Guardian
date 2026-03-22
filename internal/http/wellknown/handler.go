@@ -1,8 +1,12 @@
-package jwks
+package wellknown
 
-import "github.com/gin-gonic/gin"
-import "net/http"
-import "Guardian_/internal/oidc/wellknown"
+import (
+	"net/http"
+
+	"Guardian_/internal/oidc/wellknown"
+
+	"github.com/gin-gonic/gin"
+)
 
 type Handler struct {
 	service *wellknown.Service
@@ -12,11 +16,9 @@ func NewHandler(service *wellknown.Service) *Handler {
 	return &Handler{
 		service: service,
 	}
-
 }
 
-func (h *Handler) GetKeySet(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "hi",
-	})
+func (h *Handler) GetConfiguration(c *gin.Context) {
+	config := h.service.GetConfiguration()
+	c.JSON(http.StatusOK, config)
 }
