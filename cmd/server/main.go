@@ -1,17 +1,16 @@
 package main
 
 import (
+	"Guardian_/internal/store/entity"
 	"log"
 
 	"Guardian_/internal/http"
-	"Guardian_/internal/store/entity"
 )
 
 func main() {
 	issuer := "http://localhost:8080"
 	server := http.NewServer(issuer)
 
-	// Register test client
 	server.ClientStore.RegisterClient(&entity.Client{
 		ID:           "my-client",
 		Secret:       "my-secret",
@@ -20,7 +19,6 @@ func main() {
 		ClientType:   "confidential",
 	})
 
-	// Register test user
 	server.UserProvider.RegisterUser("user123", map[string]any{
 		"sub":   "user123",
 		"name":  "Test User",

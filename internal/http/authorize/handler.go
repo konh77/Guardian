@@ -1,8 +1,6 @@
 package authorize
 
 import (
-	"net/http"
-
 	"Guardian_/internal/oidc/authorize"
 
 	"github.com/gin-gonic/gin"
@@ -21,8 +19,9 @@ func NewHandler(service *authorize.Service) *Handler {
 func (h *Handler) Authorize(c *gin.Context) {
 	result, err := h.service.Authorize()
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, result)
+
+	c.Redirect(302, result.RedirectURL)
 }

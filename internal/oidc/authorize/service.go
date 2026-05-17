@@ -8,6 +8,6 @@ func NewService() *Service {
 
 func (s *Service) Authorize() (*Result, error) {
 	return &Result{
-		RedirectURL: "",
+		RedirectURL: "https://google.com",
 	}, nil
 }
