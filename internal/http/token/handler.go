@@ -3,19 +3,28 @@ package token
 import (
 	"net/http"
 
-	"Guardian_/internal/oidc/token"
-
 	"github.com/gin-gonic/gin"
+
+	"Guardian_/internal/oidc/signing"
+	"Guardian_/internal/oidc/token"
+	"Guardian_/internal/store"
+	"Guardian_/internal/userinfo"
 )
 
+// Handler handles HTTP requests for token endpoint
 type Handler struct {
 	service *token.Service
 }
 
-func NewHandler(service *token.Service) *Handler {
-	return &Handler{
-		service: service,
-	}
+// NewHandler creates a new token handler
+func NewHandler(
+	issuer string,
+	clientStore store.ClientStore,
+	authCodeStore store.AuthCodeStore,
+	tokenStore store.TokenStore,
+	userinfoProvider userinfo.Provider,
+	signingService *signing.Service,
+) *Handler {
 }
 
 func (h *Handler) ExchangeToken(c *gin.Context) {
