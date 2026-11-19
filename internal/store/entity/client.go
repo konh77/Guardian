@@ -1,5 +1,9 @@
 package entity
 
+import "errors"
+
+var ErrClientNotFound = errors.New("client not found")
+
 type Client struct {
 	ID                      string   `json:"client_id"`
 	Secret                  string   `json:"client_secret,omitempty"`

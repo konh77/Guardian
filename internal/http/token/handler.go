@@ -19,7 +19,9 @@ func NewHandler(service *token.Service) *Handler {
 }
 
 func (h *Handler) ExchangeToken(c *gin.Context) {
-	result, err := h.service.ExchangeToken()
+	code := c.PostForm("code")
+
+	result, err := h.service.ExchangeToken(c.Request.Context(), code)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
